@@ -1,1 +1,2 @@
 Django==2.2.7
+django-improved-user==1.0.0

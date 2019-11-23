@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Associations.apps.AssociationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +98,19 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+# As per https://django-improved-user.readthedocs.io/en/latest/quickstart.html
+AUTH_USER_MODEL='Associations.User'
+AUTH_PREFIX = 'django.contrib.auth.password_validation.'
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': AUTH_PREFIX + 'UserAttributeSimilarityValidator',
+        'OPTIONS': {
+            'user_attributes': ('email', 'full_name', 'short_name')
+        },
+    },
+    # include other password validators here
 ]
 
 
