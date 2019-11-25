@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Associations.apps.AssociationsConfig',
+    'Organizations.apps.OrganizationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # As per https://django-improved-user.readthedocs.io/en/latest/quickstart.html
-AUTH_USER_MODEL='Associations.User'
+AUTH_USER_MODEL='Organizations.User'
 AUTH_PREFIX = 'django.contrib.auth.password_validation.'
 AUTH_PASSWORD_VALIDATORS = [
     {
