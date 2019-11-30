@@ -15,6 +15,9 @@ class User(AbstractUser):
 class Organization(models.Model):
     name = models.CharField(max_length=80)
 
+    def __str__(self):
+        return self.name
+
 
 class Member(models.Model):
     """
@@ -24,7 +27,7 @@ class Member(models.Model):
       - An organization can, as members, have several users.
     """
     user = models.ForeignKey(User, models.PROTECT)
-    orga = models.ForeignKey(Organization, models.PROTECT)
+    orga = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
 
 
 class Status(models.Model):
@@ -36,6 +39,7 @@ class Status(models.Model):
         ("a", "aktiv"),
         ("p", "passiv (fördernd)"),
         ("e", "Ehrenmitglied"),
+        ("o", "other"),
         ("x", "ausgeschieden"),
     ]
 
@@ -45,8 +49,15 @@ class Status(models.Model):
     end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
     remark = models.CharField(max_length=120, blank=True)
 
+    class Meta:
+        get_latest_by = "begin"
+        verbose_name_plural = "statuses"
+
 
 class Ability(models.Model):
+    """
+    The licenses, ratings, certificates and abilities that a user may have.
+    """
     KIND_OF_ABILITY_CHOICES = [
         (
             "Pilot Licenses",
@@ -98,8 +109,12 @@ class Ability(models.Model):
         ("other", "other"),
     ]
 
-    member  = models.ForeignKey(Member, models.CASCADE)
+    user    = models.ForeignKey(User, models.CASCADE)
     kind    = models.CharField(max_length=20, choices=KIND_OF_ABILITY_CHOICES)
     number  = models.CharField(max_length=40, blank=True)
     expires = models.DateField(null=True, blank=True)
     remark  = models.CharField(max_length=80, blank=True)
+
+    class Meta:
+        get_latest_by = "expires"
+        verbose_name_plural = "abilities"
