@@ -12,48 +12,6 @@ class User(AbstractUser):
         return self.full_name
 
 
-class Organization(models.Model):
-    name = models.CharField(max_length=80)
-
-    def __str__(self):
-        return self.name
-
-
-class Member(models.Model):
-    """
-    Each member refers to exactly one User and to exactly one Organization.
-    As such, the Member model acts as an intermediate table:
-      - A user can be a member of several organizations.
-      - An organization can, as members, have several users.
-    """
-    user = models.ForeignKey(User, models.PROTECT)
-    orga = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
-
-
-class Status(models.Model):
-    """
-    The membership status that a member can have.
-    """
-    FAR_FUTURE = date(2999, 12, 31)
-    KIND_OF_STATUS_CHOICES = [
-        ("a", "aktiv"),
-        ("p", "passiv (fördernd)"),
-        ("e", "Ehrenmitglied"),
-        ("o", "other"),
-        ("x", "ausgeschieden"),
-    ]
-
-    member = models.ForeignKey(Member, models.CASCADE)
-    status = models.CharField(max_length=20, choices=KIND_OF_STATUS_CHOICES)
-    begin  = models.DateField()
-    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
-    remark = models.CharField(max_length=120, blank=True)
-
-    class Meta:
-        get_latest_by = "begin"
-        verbose_name_plural = "statuses"
-
-
 class Ability(models.Model):
     """
     The licenses, ratings, certificates and abilities that a user may have.
@@ -118,3 +76,45 @@ class Ability(models.Model):
     class Meta:
         get_latest_by = "expires"
         verbose_name_plural = "abilities"
+
+
+class Organization(models.Model):
+    name = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.name
+
+
+class Member(models.Model):
+    """
+    Each member refers to exactly one User and to exactly one Organization.
+    As such, the Member model acts as an intermediate table:
+      - A user can be a member of several organizations.
+      - An organization can, as members, have several users.
+    """
+    user = models.ForeignKey(User, models.PROTECT)
+    orga = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
+
+
+class Status(models.Model):
+    """
+    The membership status that a member can have.
+    """
+    FAR_FUTURE = date(2999, 12, 31)
+    KIND_OF_STATUS_CHOICES = [
+        ("a", "aktiv"),
+        ("p", "passiv (fördernd)"),
+        ("e", "Ehrenmitglied"),
+        ("o", "other"),
+        ("x", "ausgeschieden"),
+    ]
+
+    member = models.ForeignKey(Member, models.CASCADE)
+    status = models.CharField(max_length=20, choices=KIND_OF_STATUS_CHOICES)
+    begin  = models.DateField()
+    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
+    remark = models.CharField(max_length=120, blank=True)
+
+    class Meta:
+        get_latest_by = "begin"
+        verbose_name_plural = "statuses"
