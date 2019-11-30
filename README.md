@@ -13,6 +13,10 @@ The feature set is tailored to private flying:
   - works on smartphones, tablets and desktop PCs
   - ease of use – also when time is short
 
+This software requires a live internet connection.
+It is not intended for use in flight, but can very well be used immediatly thereafter:
+Even before you leave the cockpit, you can complete your flight records conveniently and quickly.
+
 Note that this software can *not* replace the keeping of flight records on paper where this is legally required.
 
 
