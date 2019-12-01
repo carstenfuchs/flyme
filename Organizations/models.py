@@ -73,16 +73,53 @@ class Ability(models.Model):
     expires = models.DateField(null=True, blank=True)
     remark  = models.CharField(max_length=80, blank=True)
 
+    def __str__(self):
+        num = f" ({self.number})" if self.number else ""
+        exp = f" until {self.expires}" if self.expires else ""
+        rem = f" ({self.remark})" if self.remark else ""
+        return f"{self.kind}{num}{exp} of {self.user}{rem}"
+
     class Meta:
         get_latest_by = "expires"
         verbose_name_plural = "abilities"
 
 
 class Organization(models.Model):
-    name = models.CharField(max_length=80)
+    name    = models.CharField(max_length=80)
+    members = models.ManyToManyField(User, through='Membership')
 
     def __str__(self):
         return self.name
+
+
+class Membership(models.Model):
+    """
+    A membership expresses how a user relates to an organization:
+    Users can have memberships in several organizations and organizations can
+    have memberships of several users.
+    """
+    FAR_FUTURE = date(2999, 12, 31)
+    STATUS_CHOICES = [
+        ("a", "aktiv"),
+        ("p", "passiv (fördernd)"),
+        ("e", "Ehrenmitglied"),
+        ("o", "other"),
+        ("x", "ausgeschieden"),
+    ]
+
+    user   = models.ForeignKey(User, models.PROTECT)
+    orga   = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    begin  = models.DateField()
+    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
+    remark = models.CharField(max_length=120, blank=True)
+
+    def __str__(self):
+        rem = f" ({self.remark})" if self.remark else ""
+        return f"{self.user} is \"{self.get_status_display()}\" member in {self.orga} since {self.begin}{rem}"
+
+    class Meta:
+        get_latest_by = "begin"
 
 
 class Member(models.Model):
@@ -94,6 +131,9 @@ class Member(models.Model):
     """
     user = models.ForeignKey(User, models.PROTECT)
     orga = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
+
+    def __str__(self):
+        return f"{self.user} in {self.orga}"
 
 
 class Status(models.Model):
@@ -114,6 +154,10 @@ class Status(models.Model):
     begin  = models.DateField()
     end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
     remark = models.CharField(max_length=120, blank=True)
+
+    def __str__(self):
+        rem = f" ({self.remark})" if self.remark else ""
+        return f"{self.member} is \"{self.get_status_display()}\" since {self.begin}{rem}"
 
     class Meta:
         get_latest_by = "begin"
