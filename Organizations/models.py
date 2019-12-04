@@ -12,6 +12,44 @@ class User(AbstractUser):
         return self.full_name
 
 
+class Organization(models.Model):
+    name    = models.CharField(max_length=80)
+    members = models.ManyToManyField(User, through='Membership')
+
+    def __str__(self):
+        return self.name
+
+
+class Membership(models.Model):
+    """
+    A membership expresses how a user relates to an organization:
+      - a user can be a member in several organizations
+      - an organization can have several members
+    """
+    FAR_FUTURE = date(2999, 12, 31)
+    STATUS_CHOICES = [
+        ("a", "aktiv"),
+        ("p", "passiv (fördernd)"),
+        ("e", "Ehrenmitglied"),
+        ("o", "other"),
+        ("x", "ausgeschieden"),
+    ]
+
+    user   = models.ForeignKey(User, models.PROTECT)
+    orga   = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    begin  = models.DateField()
+    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
+    remark = models.CharField(max_length=120, blank=True)
+
+    def __str__(self):
+        rem = f" ({self.remark})" if self.remark else ""
+        return f"{self.user} is \"{self.get_status_display()}\" member in {self.orga} since {self.begin}{rem}"
+
+    class Meta:
+        get_latest_by = "begin"
+
+
 class Ability(models.Model):
     """
     The licenses, ratings, certificates and abilities that a user may have.
@@ -82,83 +120,3 @@ class Ability(models.Model):
     class Meta:
         get_latest_by = "expires"
         verbose_name_plural = "abilities"
-
-
-class Organization(models.Model):
-    name    = models.CharField(max_length=80)
-    members = models.ManyToManyField(User, through='Membership')
-
-    def __str__(self):
-        return self.name
-
-
-class Membership(models.Model):
-    """
-    A membership expresses how a user relates to an organization:
-    Users can have memberships in several organizations and organizations can
-    have memberships of several users.
-    """
-    FAR_FUTURE = date(2999, 12, 31)
-    STATUS_CHOICES = [
-        ("a", "aktiv"),
-        ("p", "passiv (fördernd)"),
-        ("e", "Ehrenmitglied"),
-        ("o", "other"),
-        ("x", "ausgeschieden"),
-    ]
-
-    user   = models.ForeignKey(User, models.PROTECT)
-    orga   = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    begin  = models.DateField()
-    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
-    remark = models.CharField(max_length=120, blank=True)
-
-    def __str__(self):
-        rem = f" ({self.remark})" if self.remark else ""
-        return f"{self.user} is \"{self.get_status_display()}\" member in {self.orga} since {self.begin}{rem}"
-
-    class Meta:
-        get_latest_by = "begin"
-
-
-class Member(models.Model):
-    """
-    Each member refers to exactly one User and to exactly one Organization.
-    As such, the Member model acts as an intermediate table:
-      - A user can be a member of several organizations.
-      - An organization can, as members, have several users.
-    """
-    user = models.ForeignKey(User, models.PROTECT)
-    orga = models.ForeignKey(Organization, models.PROTECT, verbose_name="organization")
-
-    def __str__(self):
-        return f"{self.user} in {self.orga}"
-
-
-class Status(models.Model):
-    """
-    The membership status that a member can have.
-    """
-    FAR_FUTURE = date(2999, 12, 31)
-    KIND_OF_STATUS_CHOICES = [
-        ("a", "aktiv"),
-        ("p", "passiv (fördernd)"),
-        ("e", "Ehrenmitglied"),
-        ("o", "other"),
-        ("x", "ausgeschieden"),
-    ]
-
-    member = models.ForeignKey(Member, models.CASCADE)
-    status = models.CharField(max_length=20, choices=KIND_OF_STATUS_CHOICES)
-    begin  = models.DateField()
-    end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
-    remark = models.CharField(max_length=120, blank=True)
-
-    def __str__(self):
-        rem = f" ({self.remark})" if self.remark else ""
-        return f"{self.member} is \"{self.get_status_display()}\" since {self.begin}{rem}"
-
-    class Meta:
-        get_latest_by = "begin"
-        verbose_name_plural = "statuses"
