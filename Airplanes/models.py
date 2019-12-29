@@ -1,5 +1,6 @@
 from django.db import models
-from Organizations.models import Organization, User
+from Accounts.models import User
+from Organizations.models import Organization
 
 
 class Airfield(models.Model):
