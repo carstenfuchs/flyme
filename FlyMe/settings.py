@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Accounts.apps.AccountsConfig',
     'Organizations.apps.OrganizationsConfig',
     'Airplanes.apps.AirplanesConfig',
 ]
@@ -102,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # As per https://django-improved-user.readthedocs.io/en/latest/quickstart.html
-AUTH_USER_MODEL='Organizations.User'
+AUTH_USER_MODEL = 'Accounts.User'
 AUTH_PREFIX = 'django.contrib.auth.password_validation.'
 AUTH_PASSWORD_VALIDATORS = [
     {

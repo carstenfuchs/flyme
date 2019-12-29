@@ -3,7 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from improved_user.forms import UserCreationForm, UserChangeForm
-from Organizations.models import User, Ability, Organization, Membership
+from Accounts.models import User
+from Organizations.models import Ability, Organization, Membership
 
 
 class AbilityInline(admin.TabularInline):
