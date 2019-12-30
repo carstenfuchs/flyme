@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Accounts.apps.AccountsConfig',
     'Organizations.apps.OrganizationsConfig',
-    'Airplanes.apps.AirplanesConfig',
+    'Aviation.apps.AviationConfig',
 ]
 
 MIDDLEWARE = [

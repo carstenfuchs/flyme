@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Airplanes.models import Airfield, Airplane, Flight, Reservation
+from Aviation.models import Airfield, Airplane, Flight, Reservation
 
 
 class AirfieldAdmin(admin.ModelAdmin):
