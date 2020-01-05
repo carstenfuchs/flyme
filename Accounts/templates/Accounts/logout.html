@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col" style="max-width: 560px;">
+            <h1 class="mt-5 mb-3">{{ title }}</h1>
+
+            <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+            <p><a href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

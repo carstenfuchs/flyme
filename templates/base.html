@@ -36,11 +36,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logbook</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="id_navbarUserMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.short_name }}</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="id_navbarUserMenu">
+                            <a class="dropdown-item" href="{% url 'accounts:password-change' %}">Change password</a>
+                            <a class="dropdown-item" href="{% url 'accounts:logout' %}">Log out</a>
+                        </div>
+                    </li>
                 </ul>
             {% else %}
                 <div class="navbar-nav">
                  {# <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Register</a> #}
-                    <a class="nav-item nav-link" href="#">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Login</a>
                 </div>
             {% endif %}
         </div>
