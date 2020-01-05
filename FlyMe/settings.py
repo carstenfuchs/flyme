@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'Accounts.apps.AccountsConfig',
     'Aviation.apps.AviationConfig',
     'Organizations.apps.OrganizationsConfig',

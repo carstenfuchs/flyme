@@ -1,0 +1,49 @@
+{% load widget_tweaks %}
+    {% comment %}
+        Some guidance for this template was taken from
+        https://simpleisbetterthancomplex.com/article/2017/08/19/how-to-render-django-form-manually.html
+    {% endcomment %}
+
+    {% if form.errors and not form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            Beim Verarbeiten des Formulars sind Fehler aufgetreten.
+            Bitte beheben Sie die unten aufgeführten Probleme und senden Sie das Formular erneut.
+        </div>
+    {% endif %}
+
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    {% for hidden_field in form.hidden_fields %}
+        {% for error in hidden_field.errors %}
+            <div class="alert alert-danger" role="alert">
+                Fehler im verborgenen Feld „{{ hidden_field.name }}“: {{ error }}
+            </div>
+        {% endfor %}
+        {{ hidden_field }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+        <div class="form-group">
+            {{ field.label_tag }}
+
+            {% if field.errors %}
+                {{ field|add_class:"form-control is-invalid" }}
+            {% elif form.is_bound %}
+                {{ field|add_class:"form-control" }}{# We might add "is-valid" here, but I think it is confusing. #}
+            {% else %}
+                {{ field|add_class:"form-control" }}
+            {% endif %}
+
+            {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+    {% endfor %}
