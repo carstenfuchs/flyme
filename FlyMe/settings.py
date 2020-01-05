@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Accounts.apps.AccountsConfig',
-    'Organizations.apps.OrganizationsConfig',
     'Aviation.apps.AviationConfig',
+    'Organizations.apps.OrganizationsConfig',
 ]
 
 MIDDLEWARE = [

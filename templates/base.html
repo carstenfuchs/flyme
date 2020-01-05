@@ -18,7 +18,7 @@
 
     <title>{% block title %}{{ title|default:"Welcome" }}{% endblock %} - FlyMe</title>
 </head>
-<body>
+<body class="bg-light">
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="{% url 'organizations:welcome' %}">FlyMe</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#id_navbarNav" aria-controls="id_navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,16 +26,22 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="id_navbarNav">
             {% if user.is_authenticated %}
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Enter Flight</a>
-                <a class="nav-item nav-link" href="#">Logbook</a>
-            </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Add flight</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logbook</a>
+                    </li>
+                </ul>
             {% else %}
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="#">Register</a>
-                <a class="nav-item nav-link" href="#">Login</a>
-            </div>
+                <div class="navbar-nav">
+                 {# <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Register</a> #}
+                    <a class="nav-item nav-link" href="#">Login</a>
+                </div>
             {% endif %}
         </div>
     </nav>
