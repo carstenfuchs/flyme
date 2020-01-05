@@ -116,6 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
     # include other password validators here
 ]
 
+LOGIN_URL = 'accounts:login'                        # The @login_required decorator redirects here.
+LOGIN_REDIRECT_URL = 'organizations:user-overview'  # Used after successful login if no `next` parameter was given.
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
