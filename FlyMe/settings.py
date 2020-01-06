@@ -87,35 +87,26 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+# Custom user model
+# https://django-improved-user.readthedocs.io/en/latest/quickstart.html
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-# As per https://django-improved-user.readthedocs.io/en/latest/quickstart.html
 AUTH_USER_MODEL = 'Accounts.User'
-AUTH_PREFIX = 'django.contrib.auth.password_validation.'
+
+
+# Password validation
+# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': AUTH_PREFIX + 'UserAttributeSimilarityValidator',
-        'OPTIONS': {
-            'user_attributes': ('email', 'full_name', 'short_name')
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "OPTIONS": {
+            "user_attributes": ("full_name", "short_name", "email"),
+            "max_similarity": 0.8,
         },
     },
-    # include other password validators here
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 LOGIN_URL = 'accounts:login'                        # The @login_required decorator redirects here.
