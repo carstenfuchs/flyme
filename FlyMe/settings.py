@@ -130,4 +130,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# Set the URL prefix for static files, for example "http://example.com/static/"
+# or "http://static.example.com/".
 STATIC_URL = '/static/'
+
+# Have `collectstatic` also look for static files in other directories besides
+# the `static/` directories of the apps.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
