@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "bs4_base.html" %}
 {% load i18n %}
 {% block title %}Login{% endblock %}
 {% block content %}
@@ -15,7 +15,7 @@
                         <p class="mb-0">(If that is not you, please <a href="{% url 'accounts:logout' %}" class="alert-link">log out</a>.)</p>
                     </div>
                 {% endif %}
-                {% include 'inc_bs4_simple_form.html' with form=form only %}
+                {% include 'bs4_simple_form.html' with form=form only %}
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>
         </div>
