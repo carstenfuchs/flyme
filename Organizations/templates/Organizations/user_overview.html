@@ -67,7 +67,17 @@
                     <tr>
                         <td>{{ a.kind }}</td>
                         <td>{{ a.number }}</td>
-                        <td>{{ a.expires|date:"c" }}</td>
+                        {% if a.days_valid < -31 %}
+                            <td class="text-muted">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 2 %}
+                            <td class="table-danger">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 31 %}
+                            <td class="table-warning">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 62 %}
+                            <td class="text-info">{{ a.expires|date:"c" }}</td>
+                        {% else %}
+                            <td>{{ a.expires|date:"c" }}</td>
+                        {% endif %}
                         <td>{{ a.remark }}</td>
                     </tr>
                     {% endfor %}

@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+from django.utils import timezone
 from Accounts.models import User
 
 
@@ -101,6 +102,11 @@ class Ability(models.Model):
     number  = models.CharField(max_length=40, blank=True)
     expires = models.DateField(null=True, blank=True)
     remark  = models.CharField(max_length=80, blank=True)
+
+    def days_valid(self):
+        if self.expires is None:
+            return 999999
+        return (self.expires - timezone.localdate()).days
 
     def __str__(self):
         num = f" ({self.number})" if self.number else ""
