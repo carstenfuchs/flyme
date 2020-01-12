@@ -2,7 +2,7 @@ body {
     /* A navbar that is fixed with `<nav class="fixed-top">` requires custom
        padding to properly offset the contents below. The number must be
        updated whenever the height of the <nav> element changes. */
-    padding-top: 85px;
+    padding-top: 84px;
 }
 
 nav.navbar-dark.bg-dark {
