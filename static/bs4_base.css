@@ -10,6 +10,6 @@ nav.navbar-dark.bg-dark {
 }
 
 nav > a.navbar-brand > img {
-    transform: scaleX(-1);
+    /* transform: scaleX(-1); */
     width: 60px;
 }
