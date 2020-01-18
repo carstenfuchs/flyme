@@ -1,23 +1,29 @@
 {% extends "bs4_base.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %}Login{% endblock %}
 {% block content %}
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col" style="max-width: 400px;">
-            <h1 class="mt-5 mb-3">Login</h1>
+        <div class="col" style="max-width: 600px;">
+            <div class="card shadow-sm" style="margin-top: 120px;">
+                <img src="{% static 'Accounts/hello-1.jpg' %}" class="card-img-top" alt="Welcome!">
+                <div class="card-body">
+                    <h1 class="card-title">Login</h1>
 
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {% if user.is_authenticated %}
-                    <div class="alert alert-primary" role="alert">
-                        <p>You are already logged in as <em>{{ user.full_name }}</em>.</p>
-                        <p class="mb-0">(If that is not you, please <a href="{% url 'accounts:logout' %}" class="alert-link">log out</a>.)</p>
-                    </div>
-                {% endif %}
-                {% include 'bs4_simple_form.html' with form=form only %}
-                <button type="submit" class="btn btn-primary">Log in</button>
-            </form>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <div class="alert alert-primary" role="alert">
+                                <p>You are already logged in as <em title="User-ID: {{ user.pk }}">{{ user.full_name }}</em>.</p>
+                                <p class="mb-0">(If that is not you, please <a href="{% url 'accounts:logout' %}" class="alert-link">log out</a>.)</p>
+                            </div>
+                        {% endif %}
+                        {% include 'bs4_simple_form.html' with form=form only %}
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

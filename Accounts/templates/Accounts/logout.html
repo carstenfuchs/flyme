@@ -1,14 +1,19 @@
 {% extends "bs4_base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col" style="max-width: 560px;">
-            <h1 class="mt-5 mb-3">{{ title }}</h1>
-
-            <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
-            <p><a href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a></p>
+        <div class="col" style="max-width: 600px;">
+            <div class="card shadow-sm" style="margin-top: 120px;">
+                <img src="{% static 'Accounts/goodbye-1.jpg' %}" class="card-img-top" alt="See you soon!">
+                <div class="card-body">
+                    <h1 class="card-title">{{ title }}</h1>
+                    <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+                    <a class="btn btn-primary" href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
