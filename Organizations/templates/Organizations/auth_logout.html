@@ -7,11 +7,11 @@
     <div class="row justify-content-center">
         <div class="col" style="max-width: 600px;">
             <div class="card shadow-sm" style="margin-top: 120px;">
-                <img src="{% static 'Accounts/goodbye-1.jpg' %}" class="card-img-top" alt="See you soon!">
+                <img src="{% static 'Organizations/auth-goodbye-1.jpg' %}" class="card-img-top" alt="See you soon!">
                 <div class="card-body">
                     <h1 class="card-title">{{ title }}</h1>
                     <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
-                    <a class="btn btn-primary" href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a>
+                    <a class="btn btn-primary" href="{% url 'organizations:login' %}">{% trans 'Log in again' %}</a>
                 </div>
             </div>
         </div>

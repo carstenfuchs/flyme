@@ -39,4 +39,4 @@ class PCForm(auth_forms.PasswordChangeForm):
 
 class PasswordChangeView(auth_views.PasswordChangeView):
     form_class = PCForm
-    success_url = reverse_lazy('accounts:password-change-done')
+    success_url = reverse_lazy('organizations:password-change-done')

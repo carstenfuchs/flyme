@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col" style="max-width: 600px;">
             <div class="card shadow-sm" style="margin-top: 120px;">
-                <img src="{% static 'Accounts/hello-1.jpg' %}" class="card-img-top" alt="Welcome!">
+                <img src="{% static 'Organizations/auth-hello-1.jpg' %}" class="card-img-top" alt="Welcome!">
                 <div class="card-body">
                     <h1 class="card-title">Login</h1>
 
@@ -16,7 +16,7 @@
                         {% if user.is_authenticated %}
                             <div class="alert alert-primary" role="alert">
                                 <p>You are already logged in as <em title="User-ID: {{ user.pk }}">{{ user.full_name }}</em>.</p>
-                                <p class="mb-0">(If that is not you, please <a href="{% url 'accounts:logout' %}" class="alert-link">log out</a>.)</p>
+                                <p class="mb-0">(If that is not you, please <a href="{% url 'organizations:logout' %}" class="alert-link">log out</a>.)</p>
                             </div>
                         {% endif %}
                         {% include 'Organizations/bs4_simple_form.html' with form=form only %}
