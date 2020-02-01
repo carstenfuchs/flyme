@@ -1,0 +1,46 @@
+{% extends "Organizations/bs4_base.html" %}
+
+{% block title %}Abilities{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+         {# <h1 class="mt-5">Abilities <small class="text-muted">{{ u.full_name }}</small></h1> #}
+            <h1 class="mt-5">{{ u.full_name }} <small class="text-muted">Abilities</small></h1>
+
+            <table class="table table-hover table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Kind</th>
+                        <th>Number</th>
+                        <th>Expires</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in ability_list %}
+                    <tr>
+                        <td>{{ a.kind }}</td>
+                        <td>{{ a.number }}</td>
+                        {% if a.days_valid < -31 %}
+                            <td class="text-muted">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 2 %}
+                            <td class="table-danger">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 31 %}
+                            <td class="table-warning">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 62 %}
+                            <td class="text-info">{{ a.expires|date:"c" }}</td>
+                        {% else %}
+                            <td>{{ a.expires|date:"c" }}</td>
+                        {% endif %}
+                        <td>{{ a.remark }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
