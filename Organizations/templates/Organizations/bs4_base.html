@@ -76,7 +76,7 @@
                             </button>
                         </div>
                         <div class="toast-body">
-                            {{ message|capfirst }}
+                            {{ message|capfirst|safe }}
                         </div>
                     </div>
                 {% endfor %}
