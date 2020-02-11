@@ -17,4 +17,8 @@ urlpatterns = [
 
     path('abilities/', abilities.list_view, name='ability-list'),
     path('users/<int:user_id>/abilities/', abilities.list_view, name='ability-list'),
+    path('abilities/add/', abilities.create_view, name='ability-add'),
+    path('users/<int:user_id>/abilities/add/', abilities.create_view, name='ability-add'),
+    path('abilities/<int:ability_id>/', abilities.update_view, name='ability-update'),
+    path('abilities/<int:ability_id>/delete/', abilities.delete_view, name='ability-delete'),
 ]

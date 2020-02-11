@@ -47,3 +47,19 @@ def get_managed_user(managing_user, other_user_id):
         return get_all_managed_users_QS(managing_user).get(id=other_user_id)
     except User.DoesNotExist:
         raise PermissionDenied
+
+
+def is_management_allowed(managing_user, other_user):
+    if managing_user == other_user:
+        return True
+
+    return get_all_managed_users_QS(managing_user).filter(id=other_user.id).exists()
+
+
+def confirm_management_allowed(managing_user, other_user):
+    """
+    Makes sure that the first user is actually permitted to manage the second
+    user. Raises `PermissionDenied` otherwise.
+    """
+    if not is_management_allowed(managing_user, other_user):
+        raise PermissionDenied
