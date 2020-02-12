@@ -6,8 +6,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-         {# <h1 class="mt-5">Abilities <small class="text-muted">{{ u.full_name }}</small></h1> #}
-            <h1 class="mt-5">{{ u.full_name }} <small class="text-muted">Abilities</small></h1>
+         {# <h1 class="mt-5">Abilities <small class="text-muted">{{ mu.full_name }}</small></h1> #}
+            <h1 class="mt-5">{{ mu.full_name }} <small class="text-muted">Abilities</small></h1>
 
             <table class="table table-hover table-sm">
                 <thead class="thead-light">
@@ -16,6 +16,7 @@
                         <th>Number</th>
                         <th>Expires</th>
                         <th>Remark</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +36,18 @@
                             <td>{{ a.expires|date:"c" }}</td>
                         {% endif %}
                         <td>{{ a.remark }}</td>
+                        <td class="text-right">
+                            <a href="{% url 'organizations:ability-update' a.id %}" class="btn btn-secondary btn-sm">Update</a>
+                            <a href="{% url 'organizations:ability-delete' a.id %}" class="btn btn-danger btn-sm">Del</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
 
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'organizations:ability-add' %}" class="btn btn-primary btn-sm">Add new</a>
+            </div>
         </div>
     </div>
 </div>
