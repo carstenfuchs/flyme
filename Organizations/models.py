@@ -32,6 +32,7 @@ class Membership(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     begin  = models.DateField()
     end    = models.DateField(editable=False, default=FAR_FUTURE)   # The day before the *next* status or `FAR_FUTURE`.
+    is_mgr = models.BooleanField(default=False, help_text="Is the member given management access to the organization?")
     remark = models.CharField(max_length=120, blank=True)
 
     def __str__(self):
