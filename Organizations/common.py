@@ -1,5 +1,29 @@
+from datetime import date
 from django.core.exceptions import PermissionDenied
 from Accounts.models import User
+from Organizations.models import Organization
+
+
+def get_managed_organizations(user, ref_date=None):
+    """Returns all organizations that the user is a managing member of."""
+    if ref_date is None:
+        ref_date = date.today()
+
+    # Below we would like to write
+    #     members__status__ne="x",
+    # but it is still unclear if this is equivalent to
+    #     ~Q(members__status="x"),
+    # Comparing the generated SQL might suffice to settle this?
+    # See:
+    #   - https://code.djangoproject.com/ticket/5763#comment:14
+    #   - https://groups.google.com/d/msg/django-developers/T8XhqQmFrig/dxb2vjuchlQJ
+    return Organization.objects.filter(
+        membership__user=user,
+        membership__begin__lte=ref_date,
+        membership__end__gte=ref_date,
+        membership__status__in=["a", "p", "e", "o"],
+        membership__is_mgr=True,
+    )
 
 
 def get_all_managed_users_QS(managing_user):

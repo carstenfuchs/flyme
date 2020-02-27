@@ -1,0 +1,145 @@
+{% extends "Organizations/bs4_base.html" %}
+{% load tz %}
+
+{% block title %}Personal Overview{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5 mb-4">Personal Overview <small class="text-muted">{{ user.full_name }}</small></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h2>Personal Logbook</h2>
+
+            <table class="table table-hover table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Date <small class="text-muted">UTC</small></th>
+                        <th>Airplane</th>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>Off block</th>
+                        <th>Take-off</th>
+                        <th>Landing</th>
+                        <th>On block</th>
+                        <th>Landings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in flights %}
+                    <tr>
+                        <td>{{ f.dt_takeoff|date:"Y-m-d" }}</td>
+                        <td>{{ f.airplane }}</td>
+                        <td>{{ f.from_af }}</td>
+                        <td>{{ f.to_af }}</td>
+                        <td>{{ f.dt_offbl|utc|time }}</td>
+                        <td>{{ f.dt_takeoff|utc|time }}</td>
+                        <td>{{ f.dt_landing|utc|time }}</td>
+                        <td>{{ f.dt_onbl|utc|time }}</td>
+                        <td>{{ f.landings }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xl-6">
+            <h2>Abilities</h2>
+
+            <table class="table table-hover table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Kind</th>
+                        <th>Number</th>
+                        <th>Expires</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in abilities %}
+                    <tr>
+                        <td>{{ a.kind }}</td>
+                        <td>{{ a.number }}</td>
+                        {% if a.days_valid < -31 %}
+                            <td class="text-muted">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 3 %}
+                            <td class="table-danger">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 31 %}
+                            <td class="table-warning">{{ a.expires|date:"c" }}</td>
+                        {% elif a.days_valid < 62 %}
+                            <td class="text-info">{{ a.expires|date:"c" }}</td>
+                        {% else %}
+                            <td>{{ a.expires|date:"c" }}</td>
+                        {% endif %}
+                        <td>{{ a.remark }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'organizations:ability-list' %}" class="btn btn-secondary btn-sm">Show details</a>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-lg-6 col-xl-12">
+                    <h2>Airplane Reservations</h2>
+
+                    <table class="table table-hover table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Airplane</th>
+                                <th>Begin <small class="text-muted">LT</small></th>
+                                <th>End <small class="text-muted">LT</small></th>
+                                <th>Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in reservations %}
+                            <tr>
+                                <td>{{ r.airplane }}</td>
+                                <td>{{ r.begin|date:"Y-m-d H:i" }}</td>
+                                <td>{{ r.end|date:"Y-m-d H:i" }}</td>
+                                <td>{{ r.remark }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-6 col-xl-12">
+                    <h2>Memberships</h2>
+
+                    <table class="table table-hover table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Organization</th>
+                                <th>Status</th>
+                                <th>Begin</th>
+                                <th>End</th>
+                                <th>Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in memberships %}
+                            <tr>
+                                <td>{{ m.orga }}</td>
+                                <td>{{ m.get_status_display }}</td>
+                                <td>{{ m.begin|date:"Y-m-d" }}</td>
+                                <td>{% if m.end.year < 2999 %}{{ m.end|date:"Y-m-d" }}{% endif %}</td>
+                                <td>{{ m.remark }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

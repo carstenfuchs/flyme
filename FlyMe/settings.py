@@ -109,8 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-LOGIN_URL = 'organizations:login'                   # The @login_required decorator redirects here.
-LOGIN_REDIRECT_URL = 'organizations:user-overview'  # Used after successful login if no `next` parameter was given.
+# The @login_required decorator redirects here.
+LOGIN_URL = 'organizations:login'
+
+# Used after successful login if no `next` parameter was given.
+LOGIN_REDIRECT_URL = 'organizations:personal-overview'
 
 
 # Internationalization
