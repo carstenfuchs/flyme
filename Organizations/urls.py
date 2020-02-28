@@ -13,12 +13,13 @@ urlpatterns = [
     path('password-change-done/', auth.PasswordChangeDoneView.as_view(template_name='Organizations/auth_password_change_done.html'), name='password-change-done'),
 
     path('overview/', user_overview.personal_view, name='personal-overview'),
-    path('member/<int:user_id>/overview/', user_overview.member_view, name='member-overview'),
-
     path('abilities/', abilities.list_view, name='ability-list'),
-    path('users/<int:user_id>/abilities/', abilities.list_view, name='ability-list'),
     path('abilities/add/', abilities.create_view, name='ability-add'),
-    path('users/<int:user_id>/abilities/add/', abilities.create_view, name='ability-add'),
-    path('abilities/<int:ability_id>/', abilities.update_view, name='ability-update'),
-    path('abilities/<int:ability_id>/delete/', abilities.delete_view, name='ability-delete'),
+
+    path('member/<int:user_id>/', user_overview.member_view, name='member-overview'),
+    path('member/<int:user_id>/abilities/', abilities.list_view, name='ability-list'),
+    path('member/<int:user_id>/abilities/add/', abilities.create_view, name='ability-add'),
+
+    path('ability/<int:ability_id>/', abilities.update_view, name='ability-update'),
+    path('ability/<int:ability_id>/delete/', abilities.delete_view, name='ability-delete'),
 ]
