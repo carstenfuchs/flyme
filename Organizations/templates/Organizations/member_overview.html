@@ -49,37 +49,7 @@
 
         <div class="col-xl-6">
             <h2>Abilities</h2>
-
-            <table class="table table-hover table-sm">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Kind</th>
-                        <th>Number</th>
-                        <th>Expires</th>
-                        <th>Remark</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for a in abilities %}
-                    <tr>
-                        <td>{{ a.kind }}</td>
-                        <td>{{ a.number }}</td>
-                        {% if a.days_valid < -31 %}
-                            <td class="text-muted">{{ a.expires|date:"c" }}</td>
-                        {% elif a.days_valid < 3 %}
-                            <td class="table-danger">{{ a.expires|date:"c" }}</td>
-                        {% elif a.days_valid < 31 %}
-                            <td class="table-warning">{{ a.expires|date:"c" }}</td>
-                        {% elif a.days_valid < 62 %}
-                            <td class="text-info">{{ a.expires|date:"c" }}</td>
-                        {% else %}
-                            <td>{{ a.expires|date:"c" }}</td>
-                        {% endif %}
-                        <td>{{ a.remark }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% include 'Organizations/inc_abilities_table.html' with thead_class='thead-light' %}
             <div class="d-flex justify-content-end">
                 <a href="{% url 'organizations:ability-list' %}" class="btn btn-secondary btn-sm">Show details</a>
             </div>

@@ -1,0 +1,39 @@
+<table class="table table-sm">
+    <thead class="{{ thead_class }}">
+        <tr>
+            {% if with_user_name %}<th>Name</th>{% endif %}
+            <th>Kind</th>
+            <th>Number</th>
+            <th>Expires</th>
+            <th>Remark</th>
+            {% if with_buttons %}<th></th>{% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in abilities %}
+        <tr>
+            {% if with_user_name %}<td>{{ a.user.full_name }}</td>{% endif %}
+            <td>{{ a.kind }}</td>
+            <td>{{ a.number }}</td>
+            {% if a.days_valid < -31 %}
+                <td class="text-muted">{{ a.expires|date:"c" }}</td>
+            {% elif a.days_valid < 3 %}
+                <td class="table-danger">{{ a.expires|date:"c" }}</td>
+            {% elif a.days_valid < 31 %}
+                <td class="table-warning">{{ a.expires|date:"c" }}</td>
+            {% elif a.days_valid < 62 %}
+                <td class="text-info">{{ a.expires|date:"c" }}</td>
+            {% else %}
+                <td>{{ a.expires|date:"c" }}</td>
+            {% endif %}
+            <td>{{ a.remark }}</td>
+            {% if with_buttons %}
+                <td class="text-right">
+                    <a href="{% url 'organizations:ability-update' a.id %}" class="btn btn-secondary btn-sm">Update</a>
+                    <a href="{% url 'organizations:ability-delete' a.id %}" class="btn btn-danger btn-sm">Del</a>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
