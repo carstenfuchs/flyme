@@ -56,7 +56,7 @@ def member_view(request, user_id):
         airplane__owner__in=morgs_qs,
     )
 
-    # The manager can only see the membership history of organizations that he is responsible for.
+    # The manager can only see the membership history in organizations that he is responsible for.
     memberships = Membership.objects.filter(
         user=member,
         orga__in=morgs_qs,

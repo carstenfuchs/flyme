@@ -45,6 +45,7 @@ urlpatterns = [
   # path('organization/<int:org_id>/airplanes/add/', …),
   # path('organization/<int:org_id>/airfields/', …),
   # path('organization/<int:org_id>/airfields/add/', …),
+  # path('organization/<int:org_id>/update/', …),
   # path('organization/<int:org_id>/delete/', …),   # really??
 
     path('member/<int:user_id>/', user_overview.member_view, name='member-overview'),
@@ -56,24 +57,29 @@ urlpatterns = [
   # path('member/<int:user_id>/reservations/', …),
   # path('member/<int:user_id>/reservations/add/', …),
 
-    path('ability/<int:ability_id>/', abilities.update_view, name='ability-update'),
+  # path('ability/<int:ability_id>/', …),   # The list views are enough, no need for a detail view.
+    path('ability/<int:ability_id>/update/', abilities.update_view, name='ability-update'),
     path('ability/<int:ability_id>/delete/', abilities.delete_view, name='ability-delete'),
 
-  # path('reservation/<int:res_id>/', …),
-  # path('reservation/<int:res_id>/delete/', …),
+  # path('airfield/<str:desig>/', …),       # Overview with map and logbook excerpt.
+  # path('airfield/<str:desig>/logbook/', …),
+  # path('airfield/<str:desig>/logbook/add-flight/', …),
+  # path('airfield/<str:desig>/update/', …),
+  # path('airfield/<str:desig>/delete/', …),
 
-  # path('airplane/<str:callsign>/', …),
+  # path('airplane/<str:callsign>/', …),    # Overview with photo and logbook excerpt.
   # path('airplane/<str:callsign>/logbook/', …),
   # path('airplane/<str:callsign>/logbook/add-flight/', …),
   # path('airplane/<str:callsign>/reservations/', …),
   # path('airplane/<str:callsign>/reservations/add/', …),
+  # path('airplane/<str:callsign>/update/', …),
   # path('airplane/<str:callsign>/delete/', …),
 
-  # path('airfield/<str:desig>/', …),
-  # path('airfield/<str:desig>/logbook/', …),
-  # path('airfield/<str:desig>/logbook/add-flight/', …),
-  # path('airfield/<str:desig>/delete/', …),
-
-  # path('flight/<int:flight_id>/', …),
+  # path('flight/<int:flight_id>/', …),     # The list views are enough? No need for a detail view?
+  # path('flight/<int:flight_id>/update/', …),
   # path('flight/<int:flight_id>/delete/', …),
+
+  # path('reservation/<int:res_id>/', …),   # The list views are enough, no need for a detail view.
+  # path('reservation/<int:res_id>/update/', …),
+  # path('reservation/<int:res_id>/delete/', …),
 ]
