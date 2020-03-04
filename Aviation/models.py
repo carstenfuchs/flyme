@@ -4,8 +4,12 @@ from Organizations.models import Organization
 
 
 class Airfield(models.Model):
-    name = models.CharField(max_length=80)
-    icao = models.CharField(max_length=4)
+    """
+    Airfields that don't have an operator assigned must be maintained by an admin.
+    """
+    name     = models.CharField(max_length=80)
+    icao     = models.CharField(max_length=4)
+    operator = models.ForeignKey(Organization, models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         if self.icao:
@@ -14,9 +18,12 @@ class Airfield(models.Model):
 
 
 class Airplane(models.Model):
+    """
+    Airplanes that don't have an owner assigned must be maintained by an admin.
+    """
     callsign = models.CharField(max_length=20)
     mf_type  = models.CharField(max_length=40, blank=True, verbose_name="type")
-    owner    = models.ForeignKey(Organization, models.CASCADE)
+    owner    = models.ForeignKey(Organization, models.SET_NULL, null=True, blank=True)
     # Lärmschutz
 
     def __str__(self):

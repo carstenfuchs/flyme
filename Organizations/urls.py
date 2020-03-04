@@ -61,11 +61,11 @@ urlpatterns = [
     path('ability/<int:ability_id>/update/', abilities.update_view, name='ability-update'),
     path('ability/<int:ability_id>/delete/', abilities.delete_view, name='ability-delete'),
 
-  # path('airfield/<str:desig>/', …),       # Overview with map and logbook excerpt.
-  # path('airfield/<str:desig>/logbook/', …),
-  # path('airfield/<str:desig>/logbook/add-flight/', …),
-  # path('airfield/<str:desig>/update/', …),
-  # path('airfield/<str:desig>/delete/', …),
+  # path('airfield/<str:icao_code>/', …),   # Overview with map and logbook excerpt.
+  # path('airfield/<str:icao_code>/logbook/', …),
+  # path('airfield/<str:icao_code>/logbook/add-flight/', …),
+  # path('airfield/<str:icao_code>/update/', …),
+  # path('airfield/<str:icao_code>/delete/', …),
 
   # path('airplane/<str:callsign>/', …),    # Overview with photo and logbook excerpt.
   # path('airplane/<str:callsign>/logbook/', …),
