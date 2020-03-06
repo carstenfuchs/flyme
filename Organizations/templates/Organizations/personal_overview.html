@@ -110,6 +110,35 @@
                 </div>
             </div>
         </div>
+
+        {% if organizations %}
+            <div class="col">
+                <h2>Organizations</h2>
+
+                <table class="table table-hover table-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Name</th>
+                            <th title="Active and honorary members">Active Members</th>
+                            <th title="Sustaining and other members">Sustaining Members</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for orga in organizations %}
+                        <tr>
+                            <td>{{ orga.name }}</td>
+                            <td>…</td>
+                            <td>…</td>
+                            <td class="text-right">
+                                <a href="{% url 'organizations:organization-overview' orga.id %}" class="btn btn-secondary btn-sm">Overview</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,107 @@
+{% extends "Organizations/bs4_base.html" %}
+
+{% block title %}{{ org.name }} - Overview{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5 mb-4">{{ org.name }} <small class="text-muted">Overview</small></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h2>Current Members</h2>
+
+            <table class="table table-sm table-striped">
+                <thead {# class="thead-light" #}>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>since</th>
+                        <th>E-Mail</th>
+                        <th>Age</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in memberships %}
+                    <tr>
+                        <td>{{ m.user.full_name }}</td>
+                        <td>{{ m.get_status_display }}</td>
+                        <td>{{ m.begin }}</td>
+                        <td><a href="mailto:{{ m.user.full_name|urlencode }}%20%3C{{ m.user.email|urlencode }}%3E">{{ m.user.email }}</a></td>
+                        <td>…</td>
+                        <td class="text-right"><a href="{% url 'organizations:member-overview' m.user.id %}" class="btn btn-secondary btn-sm">Details</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if airplanes %}
+        <div class="col">
+            <h2>Airplane{{ airplanes|pluralize }}</h2>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Callsign</th>
+                        <th>Type</th>
+                        <th>Total hours</th>
+                        <th>Next maint.</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ap in airplanes %}
+                    <tr>
+                        <td>{{ ap.callsign }}</td>
+                        <td>{{ ap.mf_type }}</td>
+                        <td>…</td>
+                        <td>…</td>
+                        <td class="text-right">[Details]</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if airfields %}
+        <div class="col">
+            <h2>Airfield{{ airfiels|pluralize }}</h2>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ICAO Code</th>
+                        <th>Landings today</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for af in airfields %}
+                    <tr>
+                        <td>{{ af.name }}</td>
+                        <td>{{ af.icao }}</td>
+                        <td>…</td>
+                        <td class="text-right">[Logbook] [Details]</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div class="col">
+            <h2>Abilities Check</h2>
+            {% if expiring_abilities %}
+                {% include 'Organizations/inc_abilities_table.html' with abilities=expiring_abilities with_user_name=True %}
+            {% else %}
+                <p>There is no ability of any member that will expire in the next 30 days.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
