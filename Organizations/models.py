@@ -19,12 +19,19 @@ class Membership(models.Model):
       - an organization can have several members
     """
     FAR_FUTURE = date(2999, 12, 31)
+
+    STATUS_ACTIVE = "a"         # active, full, ordinary, regular (aktiv)
+    STATUS_SUPPORTING = "s"     # passive, supporting, sponsoring, sustaining, promoting (passiv, fördernd)
+    STATUS_HONORARY = "h"
+    STATUS_OTHER = "o"
+    STATUS_FORMER = "x"         # former, past (ehemalig)
+
     STATUS_CHOICES = [
-        ("a", "aktiv"),
-        ("p", "passiv (fördernd)"),
-        ("e", "Ehrenmitglied"),
-        ("o", "other"),
-        ("x", "ausgeschieden"),
+        (STATUS_ACTIVE,     "active"),
+        (STATUS_SUPPORTING, "supporting"),
+        (STATUS_HONORARY,   "honorary"),
+        (STATUS_OTHER,      "other"),
+        (STATUS_FORMER,     "former"),
     ]
 
     user   = models.ForeignKey(User, models.PROTECT)
